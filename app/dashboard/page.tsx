@@ -1,6 +1,6 @@
 'use client'
 
-import CompanyData from '@/components/CompanyData'
+import CompanyData from '@/components/usercomponents/CompanyData'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { Fragment } from 'react'

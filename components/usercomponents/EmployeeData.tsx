@@ -1,13 +1,16 @@
 'use client'
 
 import {useState, useEffect, Fragment} from 'react'
-import { projectFirestore } from '../FirebaseConfig';
+import { projectFirestore } from '../../FirebaseConfig';
 import { query, where, orderBy, doc, updateDoc, setDoc, getDocs, collection} from 'firebase/firestore'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column' 
+import { Button } from 'primereact/button'
+import { Card } from 'primereact/card'
 import { useRouter } from 'next/navigation'
 import { DataContext, useDataContext } from '@/context/DataContext';
 import { useEmployeeContext } from '@/context/EmployeeContext';
+import Link from 'next/link';
 
 import classes from './CompanyData.module.css'
 
@@ -54,6 +57,15 @@ const EmployeeData = () => {
     } else {
 
     return <Fragment>
+
+<Card >
+<Link href="/dashboard"><Button>Back</Button></Link>
+          <h5>Company Data Component</h5>
+          
+          
+       <br/>
+
+
         <DataTable value={employeeData} 
                  showGridlines 
                  paginator 
@@ -68,6 +80,7 @@ const EmployeeData = () => {
         <Column field="Email" header="Email"></Column>
         <Column field="Status" header="Status"></Column>
       </DataTable>
+      </Card>
             </Fragment>
     }
 }

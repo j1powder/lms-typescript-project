@@ -20,12 +20,16 @@ const Header:React.FC = () => {
   const items = [
     {
         label: 'Home',
-        icon: 'pi pi-home',
+        
         command: () => router.push('/')
     },
     {
         label: 'Contact Us',
-        icon: 'pi pi-star'
+        
+    },
+    {
+        label: "Course List",
+        command: () => router.push('/courseslist')
     },
     {
         label: 'Course Builder',
@@ -33,7 +37,7 @@ const Header:React.FC = () => {
     },
     {
         label: 'Sign In',
-        icon: 'pi pi-envelope',
+        
         command: ()=> router.push('/dashboard')
     }
 ];

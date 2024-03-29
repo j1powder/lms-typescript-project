@@ -1,7 +1,7 @@
 'use client'
 
 import {useState, useEffect, Fragment, useContext} from 'react'
-import { projectFirestore } from '../FirebaseConfig';
+import { projectFirestore } from '../../FirebaseConfig';
 import { query, orderBy, doc, updateDoc, setDoc, getDocs, collection} from 'firebase/firestore'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

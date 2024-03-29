@@ -5,3 +5,8 @@
     display: grid;
     grid-template-columns: auto;
 }
+
+.backbutton {
+    width: 2rem;
+    
+}

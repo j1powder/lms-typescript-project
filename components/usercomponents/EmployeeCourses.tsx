@@ -1,15 +1,17 @@
 'use client'
 
 import { Fragment, useState, useEffect } from "react";
-import { projectFirestore } from '../FirebaseConfig';
+import { projectFirestore } from '../../FirebaseConfig';
 import { query, where, orderBy, doc, updateDoc, setDoc, getDocs, collection} from 'firebase/firestore'
 import { DataContext, DataContextProvider, useDataContext } from '@/context/DataContext';
 import { useEmployeeContext } from "@/context/EmployeeContext";
 import { Card } from 'primereact/card'  
 import { DataTable } from "primereact/datatable";
 import { Column } from 'primereact/column'
-import { ProgressBar } from "primereact/progressbar";
+import { Button } from 'primereact/button'
 
+import { ProgressBar } from "primereact/progressbar";
+import Link from "next/link";
 import classes from './CompanyData.module.css'
 
 
@@ -60,10 +62,19 @@ const EmployeeCourses = () => {
      if(loading){
         return <h3>Loading data...</h3>
      } else if(!loading && !courseProgress[0]){
-        return <h3>There is currently no course data for this user</h3>
+        return <Card >
+        <Link href="/employees"> <Button>Back</Button></Link>
+        <h3>There is currently no course data for this user</h3>
+        </Card>
      } else {
         return <Fragment>
             <h4>Course Data will go here</h4>
+            <Card >
+            <Link href="/employees"> <Button>Back</Button></Link>
+          <h5>Company Data Component</h5>
+          
+          
+       <br/>
 
             <ul>
                 {courseProgress && courseProgress[0] && Object.entries(courseProgress[0]).map((item:any)=>{
@@ -82,7 +93,8 @@ const EmployeeCourses = () => {
                     
                 })}
             </ul>
-
+            </Card>
+                <br/>
         </Fragment>
      }
 

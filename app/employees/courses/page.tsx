@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import EmployeeCourses from "@/components/EmployeeCourses";
+import EmployeeCourses from "@/components/usercomponents/EmployeeCourses";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
