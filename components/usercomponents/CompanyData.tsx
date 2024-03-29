@@ -53,7 +53,7 @@ const CompanyData = () => {
         return <Fragment>
           <Card title="top page">
           <h5>Company Data Component</h5>
-          <Button><Link href="/employees">See Below</Link></Button>
+          <Link href="/employees"> <Button>See Below</Button></Link>
           </Card>
        <br/>
 
