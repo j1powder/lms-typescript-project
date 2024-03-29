@@ -1,0 +1,11 @@
+
+.banner {
+  width:100%;
+  height: auto;
+  min-height:275px;
+}
+
+.page{
+  height: 100%;
+  min-height: 600px;
+}
