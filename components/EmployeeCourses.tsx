@@ -4,6 +4,7 @@ import { Fragment, useState, useEffect } from "react";
 import { projectFirestore } from '../FirebaseConfig';
 import { query, where, orderBy, doc, updateDoc, setDoc, getDocs, collection} from 'firebase/firestore'
 import { DataContext, DataContextProvider, useDataContext } from '@/context/DataContext';
+import { useEmployeeContext } from "@/context/EmployeeContext";
 import { Card } from 'primereact/card'  
 import { DataTable } from "primereact/datatable";
 import { Column } from 'primereact/column'
@@ -17,12 +18,13 @@ const EmployeeCourses = () => {
  const [courseProgress, setCourseProgress] = useState<any>(null);
  const [loading, setLoading] = useState<Boolean>(true);
  const {updateRowData, selection} = useDataContext();
+ const { updateEmployeeData, empSelection} = useEmployeeContext();
 
     useEffect(()=>{
         let results:object[]=[];
         const fetchData = async () => {
         const collectionRef = collection(projectFirestore, "course-progress")
-        const q = query(collectionRef, where("Employee_Name", "==", `${selection.Name}`))
+        const q = query(collectionRef, where("Employee_Name", "==", `${empSelection.Name}`))
         const querySnapshot = await getDocs(q);
 
        //const querySnapshot = await getDocs(collection(projectFirestore, "course-progress"));

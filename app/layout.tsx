@@ -7,6 +7,7 @@ import "./globals.css";
 import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { DataContextProvider } from "@/context/DataContext";
+import { EmployeeContextProvider } from "@/context/EmployeeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <PrimeReactProvider >
           <DataContextProvider>
+            <EmployeeContextProvider>
         {children}
+        </EmployeeContextProvider>
         </DataContextProvider>
         </PrimeReactProvider>
         </body>

@@ -7,6 +7,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column' 
 import { useRouter } from 'next/navigation'
 import { DataContext, useDataContext } from '@/context/DataContext';
+import { useEmployeeContext } from '@/context/EmployeeContext';
 
 import classes from './CompanyData.module.css'
 
@@ -16,7 +17,7 @@ const EmployeeData = () => {
     const [selectedRow, setSelectedRow] = useState<any>();
     const router = useRouter();
     const {updateRowData, selection} = useDataContext();
-
+    const { updateEmployeeData, empSelection} = useEmployeeContext();
     
 
     useEffect(()=>{
@@ -43,20 +44,9 @@ const EmployeeData = () => {
         //console.log(selection.Name)
 
         const sendToEmployeesPage = (e:any) => {
-            updateRowData(e);
+            updateEmployeeData(e);
             router.push('/employees/courses')
         }
-
-        let thisCompaniesUsers:object[] = [];
-        if(employeeData){
-          employeeData.map((user:any)=>{
-            if(user.Company_Name === selection.Name ){
-              return thisCompaniesUsers.push(user)
-            }
-          })
-        }
-
-        console.log(thisCompaniesUsers)
     
 
     if(loading){
