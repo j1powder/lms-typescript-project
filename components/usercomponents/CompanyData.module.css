@@ -29,3 +29,11 @@
     float: right;
 }
 
+.courseTitle {
+    color: black;
+
+}
+.courseTitle:hover {
+    cursor: pointer;
+}
+

@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useRef } from "react";
 import { projectFirestore } from '../../FirebaseConfig';
 import { query, where, orderBy, doc, updateDoc, setDoc, getDocs, collection} from 'firebase/firestore'
 import { DataContext, DataContextProvider, useDataContext } from '@/context/DataContext';
@@ -21,6 +21,7 @@ const EmployeeCourses = () => {
  const [loading, setLoading] = useState<Boolean>(true);
  const {updateRowData, selection} = useDataContext();
  const { updateEmployeeData, empSelection} = useEmployeeContext();
+ const thisCourse:any = useRef();
 
     useEffect(()=>{
         let results:object[]=[];
@@ -79,10 +80,12 @@ const EmployeeCourses = () => {
             <ul>
                 {courseProgress && courseProgress[0] && Object.entries(courseProgress[0]).map((item:any)=>{
                     if(item[0] !== "Employee_Name" && item[0] !== "Percent_Complete" && item[0] !== "id") {
-                        return <Link href="/employees/courses/course-detail" style={{textDecoration: "none", color:"black"}}>
-                              <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard}>
+                        return <Fragment key={item[0]}>
+                          {/* <Link href="/employees/courses/course-detail" style={{textDecoration: "none", color:"black"}}> */}
+                              
+                              <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard} >
                              <div style={{padding:"1rem"}}>
-                                <span>{item[0].replace(/_/g, ' ')}</span>
+                                <span className={classes.courseTitle} onClick={(e)=> console.log(e.target.innerHTML)}>{item[0].replace(/_/g, ' ')}</span>
                                 <span style={{float:"right"}}>{item[1]}</span><br/><br/>
                                 <span style={{padding: "2rem 0rem"}}>
                                     
@@ -90,7 +93,8 @@ const EmployeeCourses = () => {
                                 </span>
                                 </div>
                             </li>
-                            </Link>
+                            {/* </Link> */}
+                            </Fragment>
                     }
                     
                 })}
