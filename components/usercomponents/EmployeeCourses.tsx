@@ -79,7 +79,8 @@ const EmployeeCourses = () => {
             <ul>
                 {courseProgress && courseProgress[0] && Object.entries(courseProgress[0]).map((item:any)=>{
                     if(item[0] !== "Employee_Name" && item[0] !== "Percent_Complete" && item[0] !== "id") {
-                        return <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard}>
+                        return <Link href="/employees/courses/course-detail" style={{textDecoration: "none", color:"black"}}>
+                              <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard}>
                              <div style={{padding:"1rem"}}>
                                 <span>{item[0].replace(/_/g, ' ')}</span>
                                 <span style={{float:"right"}}>{item[1]}</span><br/><br/>
@@ -89,6 +90,7 @@ const EmployeeCourses = () => {
                                 </span>
                                 </div>
                             </li>
+                            </Link>
                     }
                     
                 })}
