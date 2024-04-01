@@ -11,6 +11,7 @@ import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 
 import { ProgressBar } from "primereact/progressbar";
+import { useLocalStorage } from "@/helper-function/HelperFunctions";
 import Link from "next/link";
 import classes from './CompanyData.module.css'
 
@@ -21,13 +22,14 @@ const EmployeeCourses = () => {
  const [loading, setLoading] = useState<Boolean>(true);
  const {updateRowData, selection} = useDataContext();
  const { updateEmployeeData, empSelection} = useEmployeeContext();
+ const employee = useLocalStorage("EmployeeName")
  const thisCourse:any = useRef();
 
     useEffect(()=>{
         let results:object[]=[];
         const fetchData = async () => {
         const collectionRef = collection(projectFirestore, "course-progress")
-        const q = query(collectionRef, where("Employee_Name", "==", `${empSelection.Name}`))
+        const q = query(collectionRef, where("Employee_Name", "==", `${employee}`))
         const querySnapshot = await getDocs(q);
 
        //const querySnapshot = await getDocs(collection(projectFirestore, "course-progress"));
@@ -39,8 +41,11 @@ const EmployeeCourses = () => {
         setCourseProgress(results);
         setLoading(false);
       }
-      fetchData()
-        },[])  
+      
+        fetchData()
+      
+      
+        },[employee])  
 
     // if(courseProgress){
     //     courseProgress.map((courses:any)=>{
@@ -61,7 +66,10 @@ const EmployeeCourses = () => {
 
 
      if(loading){
-        return <h3>Loading data...</h3>
+        return   <Card >
+        <Link href="/employees"> <Button>Back</Button></Link>
+        <h3>Loading data...</h3>
+        </Card>
      } else if(!loading && !courseProgress[0]){
         return <Card >
         <Link href="/employees"> <Button>Back</Button></Link>

@@ -45,7 +45,7 @@ const CompanyData = () => {
         },[])  
       
 
-    //console.log(selection)
+    console.log(selection)
 
     if(loading){
         return <h4>Loading data....</h4>
@@ -64,7 +64,7 @@ const CompanyData = () => {
                  rowsPerPageOptions={[10, 25, 50]}
                  selectionMode="single" 
                  selection={selectedRow}
-                 onSelectionChange={(e)=>{updateRowData(e); router.push('/employees'); console.log(selection); }}>
+                 onSelectionChange={(e)=>{updateRowData(e); router.push('/employees'); console.log(selection); localStorage.setItem("CompanyName", e.value.Name) }}>
 
         <Column field="Name" filter header="Company" sortable></Column>
         <Column field="Status" filter header="Status"></Column>

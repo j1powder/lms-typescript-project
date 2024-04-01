@@ -10,6 +10,7 @@ import { Card } from 'primereact/card'
 import { useRouter } from 'next/navigation'
 import { DataContext, useDataContext } from '@/context/DataContext';
 import { useEmployeeContext } from '@/context/EmployeeContext';
+import { useLocalStorage } from '@/helper-function/HelperFunctions';
 import Link from 'next/link';
 
 import classes from './CompanyData.module.css'
@@ -21,13 +22,22 @@ const EmployeeData = () => {
     const router = useRouter();
     const {updateRowData, selection} = useDataContext();
     const { updateEmployeeData, empSelection} = useEmployeeContext();
-    
+    const company = useLocalStorage('CompanyName').trim()
 
+    
+    
     useEffect(()=>{
         let results:object[]=[];
         const fetchData = async () => {
         const collectionRef = collection(projectFirestore, "users")
-        const q = query(collectionRef, where("Company_Name", "==", `${selection.Name}`))
+        
+        const q = query(collectionRef, where("Company_Name", "==", `${company}`));
+        // if(selection !== undefined && selection.Name){
+        //   q = query(collectionRef, where("Company_Name", "==", `${selection.Name}`))
+        // } else {
+        //   q = query(collectionRef, where("Company_Name", "==", `${company}`)) 
+        // }
+        
         const querySnapshot = await getDocs(q);
         //const q = query(querySnapshot, orderBy('Name'))
       
@@ -39,21 +49,29 @@ const EmployeeData = () => {
         setEmployeeData(results);
         setLoading(false);
       }
-      fetchData()
-        },[]) 
+        
+          fetchData()
+      
+        },[company]) 
+       
+       
+        
+        console.log(employeeData)
+        console.log(company)
 
-
-
-        //console.log(selection.Name)
 
         const sendToEmployeesPage = (e:any) => {
             updateEmployeeData(e);
+            localStorage.setItem("EmployeeName", e.value.Name)
             router.push('/employees/courses')
         }
     
 
     if(loading){
-      return <h3>Loading data...</h3>
+      return <Card>
+        <Link href="/dashboard"><Button>Back</Button></Link>
+        <h3>Loading data...</h3>
+        </Card>
     } else {
 
     return <Fragment>
@@ -61,7 +79,7 @@ const EmployeeData = () => {
 <Card >
 <Link href="/dashboard"><Button>Back</Button></Link>
           <h5>Company Data Component</h5>
-          
+          <h5>{company}</h5>
           
        <br/>
 
