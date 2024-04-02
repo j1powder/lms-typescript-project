@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useEffect, useState, useRef } from "react";
+import { Fragment, useEffect, useState, useRef, useReducer } from "react";
 import { projectFirestore } from "@/FirebaseConfig";
 import { getDocs, collection, query, orderBy } from "firebase/firestore";
 import { Card } from 'primereact/card'
@@ -18,6 +18,7 @@ import classes from './Courses.module.css'
 
 
 const CourseComponent = () => {
+
     const [courseData, setCourseData] = useState<any>()
     const [loading, setLoading] = useState<Boolean>(true)
     const [showSectionDetails, setShowSectionDetails] = useState<Boolean>(false);
@@ -28,8 +29,15 @@ const CourseComponent = () => {
     const [selectedAnswer2, setSelectedAnswer2] = useState<any>()
     const [selectedAnswer3, setSelectedAnswer3] = useState<any>()
     const [selectedAnswer4, setSelectedAnswer4] = useState<any>()
-    const [disabledStatus, setDisabledStatus] = useState<any>(true)  
+    const [question1, setQuestion1] = useState<any>()
+    const [question2, setQuestion2] = useState<any>()
+    const [question3, setQuestion3] = useState<any>()
+    const [question4, setQuestion4] = useState<any>()
+    const [disabledStatus, setDisabledStatus] = useState<any>(true) 
+     
     const formRef = useRef();
+    
+
 
     useEffect(()=>{
         let results:object[]=[];
@@ -55,46 +63,52 @@ const CourseComponent = () => {
 
         const sectionSubmitHandler = (e:any) => {
           e.preventDefault();
+          setDisabledStatus(true)
+          setQuestion1(false);
+          setQuestion2(false);
+          setQuestion3(false);
+          setQuestion4(false);
+          setSectionVisible(false);
+          setSelectedAnswer1(undefined)
+          setSelectedAnswer2(undefined)
+          setSelectedAnswer3(undefined)
+          setSelectedAnswer4(undefined)
 
         }
 
-        const disabledHandler = () => {
-          let question1 = false;
-          let question2 = false;
-          let question3 = false;
-          let question4 = false;
+
+
+ useEffect(()=>{
+  if(selectedSection && selectedSection.question1.questionText === "" || selectedSection && selectedSection.question1.questionText === null){
+    setQuestion1(true)
+  }
+  if(selectedSection && selectedSection.question2.questionText === "" || selectedSection && selectedSection.question2.questionText === null){
+    setQuestion2(true)
+  }
+  if(selectedSection && selectedSection.question3.questionText === "" || selectedSection && selectedSection.question3.questionText === null){
+    setQuestion3(true)
+    console.log("checked status")
+  }
+  if(selectedSection && selectedSection.question4.questionText === "" || selectedSection && selectedSection.question4.questionText === null){
+    setQuestion4(true)
+  }
+  if(question1 === true && 
+    question2 === true &&
+    question3 === true &&
+    question4 === true){
+      setDisabledStatus(false)
+    }
+ },[question1, question2, question3, question4])
+
+
+        console.log(question1,question2, question3, question4)
+          console.log(disabledStatus)
+  
           if(selectedSection){
-            if(selectedAnswer1 !== undefined && selectedAnswer1 === selectedSection.question1.isCorrect || 
-              selectedSection.question1 === "" || 
-              selectedSection.question1 === null
-               ) {
-                question1 = true;
-               }
-            if(selectedAnswer2 !== undefined && selectedAnswer2 === selectedSection.question2.isCorrect ||
-               selectedSection.question2 === "" ||
-               selectedSection.question2 === null) {
-                question2 = true;
-               }
-
+            console.log(selectedSection.question3)
           }
-          if(question1 === true && question2 === true){
-            setDisabledStatus(false);
-          } else {
-            setDisabledStatus(true);
-          }
-          console.log("function ran")
-          return disabledStatus
-        }
-        //console.log(courseData)
-        //console.log(selectedSection)
-        // if(selectedSection && selectedSection.question1){
-        //   console.log(selectedAnswer1, selectedSection.question1.isCorrect)
-        // }
 
-     
-
-        
-
+          
         if(loading){
           return <h3>Loading data...</h3>
         } else if(!loading && !courseData[0] ) {
@@ -127,7 +141,15 @@ const CourseComponent = () => {
                                         style={{margin: "0rem 0.2rem"}} 
                                         inputId={answer}
                                         value={answer} 
-                                        onChange={(e) => {setSelectedAnswer1(e.value); disabledHandler(); }}
+                                        onChange={(e) => {setSelectedAnswer1(e.value); console.log(e.value);
+                                          if(e.value !== undefined && e.value=== selectedSection.question1.isCorrect || 
+                                            selectedSection.question1 === "" || 
+                                            selectedSection.question1 === null
+                                             ) {
+                                              setQuestion1(true)
+                                             }
+                                        }}
+                                        
                                         checked={selectedAnswer1 === answer}/> 
                                         <span>{answer}</span>
                                         <br/>
@@ -145,7 +167,14 @@ const CourseComponent = () => {
                                         className="radioBtn"  
                                         inputId={answer}
                                         value={answer} 
-                                        onChange={(e) => {setSelectedAnswer2(e.value); disabledHandler(); }}
+                                        onChange={(e) => {setSelectedAnswer2(e.value); 
+                                          if(e.value !== undefined && e.value === selectedSection.question2.isCorrect ||
+                                            selectedSection.question2 === "" ||
+                                            selectedSection.question2 === null) {
+                                             setQuestion2(true);
+                                            }
+                                        }}
+                                        
                                         checked={selectedAnswer2 === answer}/>
                                         <span>{answer}</span>
                                         <br/>
@@ -163,7 +192,13 @@ const CourseComponent = () => {
                             style={{margin: "0rem 0.2rem"}} 
                             inputId={answer}
                             value={answer} 
-                            onChange={(e) => setSelectedAnswer3(e.value)}
+                            onChange={(e) => {setSelectedAnswer3(e.value);
+                              if(e.value !== undefined && e.value === selectedSection.question3.isCorrect ||
+                                selectedSection.question2 === "" ||
+                                selectedSection.question2 === null) {
+                                 setQuestion3(true);
+                                }
+                            }}
                             checked={selectedAnswer3 === answer}/>
                             <span>{answer}</span>
                             <br/>
@@ -182,7 +217,13 @@ const CourseComponent = () => {
                             style={{margin: "0rem 0.2rem"}} 
                             inputId={answer}
                             value={answer} 
-                            onChange={(e) => setSelectedAnswer4(e.value)}
+                            onChange={(e) => {setSelectedAnswer4(e.value);
+                              if(e.value !== undefined && e.value === selectedSection.question4.isCorrect ||
+                                selectedSection.question2 === "" ||
+                                selectedSection.question2 === null) {
+                                 setQuestion4(true);
+                                }
+                              }}
                             checked={selectedAnswer4 === answer}/>
                             <span>{answer}</span>
                             <br/>
@@ -191,7 +232,7 @@ const CourseComponent = () => {
                         {selectedAnswer4 !== undefined && selectedAnswer4 === selectedSection.question4.isCorrect && <p>Great Job</p> }
                         {selectedAnswer4 !== undefined && selectedAnswer4 !== selectedSection.question4.isCorrect && <p>Wrong answer</p> }
                         <Button 
-                            onClick={(e)=>{}}
+                            onClick={sectionSubmitHandler}
                             disabled={disabledStatus}>Submit</Button>
                         </form>
 
