@@ -35,14 +35,15 @@ const CourseComponent = () => {
     const [question4, setQuestion4] = useState<any>()
     const [disabledStatus, setDisabledStatus] = useState<any>(true) 
      
-    const formRef = useRef();
+    //const formRef = useRef();
     
+    const finalURL = "https://player.vimeo.com/video/455943382?h=2d45027c8e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
 
 
     useEffect(()=>{
         let results:object[]=[];
         const fetchData = async () => {
-        const collectionRef = collection(projectFirestore, "newcourses", "Arc Flash", "Sections")
+        const collectionRef = collection(projectFirestore, "newcourses", "Aerial Lifts", "Sections")
         const q = query(collectionRef, orderBy("orderNumber"))
         const querySnapshot = await getDocs(q);
         //const q = query(querySnapshot, orderBy('Name'))
@@ -101,12 +102,7 @@ const CourseComponent = () => {
  },[question1, question2, question3, question4])
 
 
-        console.log(question1,question2, question3, question4)
-          console.log(disabledStatus)
-  
-          if(selectedSection){
-            console.log(selectedSection.question3)
-          }
+
 
           
         if(loading){
@@ -132,7 +128,7 @@ const CourseComponent = () => {
                                         onEnded={() => {console.log("this is the onEnded function")}}
                                     />
                         <br/>
-                        <form id="sectionForm" ref={formRef}>
+                        <form  >
                         <p>{selectedSection.question1.questionText}</p><br/><br/>
                         {selectedSection.question1.answerOptions && selectedSection.question1.answerOptions.map((answer:any)=>{
                           return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
@@ -238,12 +234,103 @@ const CourseComponent = () => {
 
       </>  }
         </Sidebar>
-        
-        <Card onClick={()=>setFinalVisible(true)}>
-          <h3>Final Acknowledgement</h3>
-        </Card>
+        <hr/>
+        <div onClick={()=>setFinalVisible(true)} className={classes.finalCard}>
+          <h4>Conclusion - Final Knowledge Check</h4>
+        </div>
         <Sidebar visible={finalVisible} onHide={() => setFinalVisible(false)} fullScreen>
-                        <h4>Final Acknowledgement Content goes here</h4>
+                        <h4>Final Knowledge Check</h4>
+                        <ReactPlayer 
+                                    url={finalURL}
+                                    onReady={()=> console.log("this is the onReady function")}
+                                    onEnded={()=> console.log("this is the onEnded function")}
+                                    controls />
+                        {courseData && courseData.map((section:any)=>{
+
+                          return <Fragment> 
+                          {!section.question1.isCorrect.includes("ready to proceed") && <>
+                                                    <p>{section.question1.questionText}</p>
+                                                    {section.question1.answerOptions.map((answer:any)=>{
+                                                      return <Fragment>
+                                                        <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                                                    <RadioButton
+                                                    className="radioBtn" 
+                                                    style={{margin: "0rem 0.2rem"}} 
+                                                    inputId={answer}
+                                                    value={answer} 
+                                                    onChange={()=> console.log("Hello there")}
+                                                    checked={selectedAnswer4 === answer}/>
+                                                    <span>{answer}</span>
+                                                    <br/>
+                                                </div>
+                                                      </Fragment>
+                                                    })}
+                                              <br/>
+                                          </> } 
+
+
+                              {section.question2.isCorrect !== "" && section.question2.isCorrect !== null && <>
+                              <p>{section.question2.questionText}</p>
+                            {section.question2.answerOptions.map((answer:any)=>{
+                              return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                              <RadioButton
+                              className="radioBtn" 
+                              style={{margin: "0rem 0.2rem"}} 
+                              inputId={answer}
+                              value={answer} 
+                              onChange={()=> console.log("Hello there")}
+                              checked={selectedAnswer4 === answer}/>
+                              <span>{answer}</span>
+                              <br/>
+                          </div>
+                            })}
+                            <br/>
+                              </>}
+                            
+                            {section.question3.questionText !== "" && section.question3.questionText !== null && <>
+                            <p>{section.question3.questionText}</p><br/>
+                            {section.question3.answerOptions.map((answer:any)=>{
+                              return <Fragment>
+                                <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                              <RadioButton
+                              className="radioBtn" 
+                              style={{margin: "0rem 0.2rem"}} 
+                              inputId={answer}
+                              value={answer} 
+                              onChange={()=> console.log("Hello there")}
+                              checked={selectedAnswer4 === answer}/>
+                              <span>{answer}</span>
+                              <br/>
+                          </div>
+                              </Fragment>
+                            })}
+                            <br/>
+                            </>}
+
+                            {section.question4.questionText !== "" && !section.question4.questionText !== null && <>
+                            <p>{section.question4.questionText}</p><br/><br/>
+                            {section.question4.answerOptions.map((answer:any)=>{
+                              return <Fragment>
+                                <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                              <RadioButton
+                              className="radioBtn" 
+                              style={{margin: "0rem 0.2rem"}} 
+                              inputId={answer}
+                              value={answer} 
+                              onChange={()=> console.log("Hello there")}
+                              checked={selectedAnswer4 === answer}/>
+                              <span>{answer}</span>
+                              <br/>
+                          </div>
+                              </Fragment>
+                            })}
+                            <br/>
+                            </>}
+
+                            </Fragment>
+                        })}
+                        <br/>
+                        <Button >Submit Final Exam</Button>
         </Sidebar>
         
         

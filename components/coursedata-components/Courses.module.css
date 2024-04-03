@@ -8,3 +8,13 @@
     list-style: none;
     padding: 1rem;
 }
+
+.finalCard {
+    color: black;
+    padding:0.3rem;
+}
+
+.finalCard:hover {
+cursor: pointer;
+background-color: #dddddd;
+}
