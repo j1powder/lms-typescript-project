@@ -12,6 +12,7 @@ import { Column } from 'primereact/column'
 import { Dialog } from 'primereact/dialog'
 import { Sidebar } from 'primereact/sidebar';
 import { RadioButton } from "primereact/radiobutton";
+import { useLocalStorage } from "@/helper-function/HelperFunctions";
 
 
 import classes from './Courses.module.css'
@@ -34,8 +35,11 @@ const CourseComponent = () => {
     const [question3, setQuestion3] = useState<any>()
     const [question4, setQuestion4] = useState<any>()
     const [disabledStatus, setDisabledStatus] = useState<any>(true) 
+    const course = useLocalStorage('CourseName');
      
-    //const formRef = useRef();
+    
+    //const formRef = useRef(); 
+
     
     const finalURL = "https://player.vimeo.com/video/455943382?h=2d45027c8e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
 
@@ -43,7 +47,7 @@ const CourseComponent = () => {
     useEffect(()=>{
         let results:object[]=[];
         const fetchData = async () => {
-        const collectionRef = collection(projectFirestore, "newcourses", "Aerial Lifts", "Sections")
+        const collectionRef = collection(projectFirestore, "newcourses", `${course}`, "Sections")
         const q = query(collectionRef, orderBy("orderNumber"))
         const querySnapshot = await getDocs(q);
         //const q = query(querySnapshot, orderBy('Name'))
@@ -56,11 +60,15 @@ const CourseComponent = () => {
         setCourseData(results);
         setLoading(false);
       }
-      
+      if(course){
         fetchData()
+      }
+        
+      
+        
       
       
-        },[]) 
+        },[course]) 
 
         const sectionSubmitHandler = (e:any) => {
           e.preventDefault();
@@ -101,6 +109,7 @@ const CourseComponent = () => {
     }
  },[question1, question2, question3, question4])
 
+ console.log(question1, question2, question3, question4)
 
 
 
@@ -129,7 +138,8 @@ const CourseComponent = () => {
                                     />
                         <br/>
                         <form  >
-                        <p>{selectedSection.question1.questionText}</p><br/><br/>
+                        {selectedSection.question1.questionText !== "" && selectedSection.question1.questionText !== null && <> 
+                        <p>{selectedSection.question1.questionText}</p>
                         {selectedSection.question1.answerOptions && selectedSection.question1.answerOptions.map((answer:any)=>{
                           return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                             <RadioButton 
@@ -153,9 +163,12 @@ const CourseComponent = () => {
                         })}
                         {selectedAnswer1 !== undefined && selectedAnswer1 === selectedSection.question1.isCorrect && <p>Great Job</p> }
                         {selectedAnswer1 !== undefined && selectedAnswer1 !== selectedSection.question1.isCorrect && <p>Wrong answer</p> }
-                        <br/><br/>
+                        <br/>
+                        
+                        </>}
 
-                       <p>{selectedSection.question2.questionText}</p><br/><br/>
+                        {selectedSection.question2.questionText !== "" && selectedSection.question2.questionText !== null && <> 
+                        <p>{selectedSection.question2.questionText}</p>
                         {selectedSection.question2.answerOptions && selectedSection.question2.answerOptions.map((answer:any)=>{
                           return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                             <RadioButton 
@@ -179,10 +192,14 @@ const CourseComponent = () => {
                         {selectedAnswer2 !== undefined && selectedAnswer2 === selectedSection.question2.isCorrect && <p>Great Job</p> }
                         {selectedAnswer2 !== undefined && selectedAnswer2 !== selectedSection.question2.isCorrect && <p>Wrong answer</p> }
                         <br/><br/>
+                        
+                        </>}
 
-                        <p>{selectedSection.question3.questionText}</p><br/><br/>
+                      {selectedSection.question3.questionText !== "" && selectedSection.question3.questionText !== null && <>
+                      <p>{selectedSection.question3.questionText}</p><br/><br/>
                         {selectedSection.question3.answerOptions && selectedSection.question3.answerOptions.map((answer:any)=>{
-                          return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                         
+                            return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                             <RadioButton
                             className="radioBtn"  
                             style={{margin: "0rem 0.2rem"}} 
@@ -199,34 +216,45 @@ const CourseComponent = () => {
                             <span>{answer}</span>
                             <br/>
                             </div>
+                          
+                          
+
                         })}
                         {selectedAnswer3 !== undefined && selectedAnswer3 === selectedSection.question3.isCorrect && <p>Great Job</p> }
                         {selectedAnswer3 !== undefined && selectedAnswer3 !== selectedSection.question3.isCorrect && <p>Wrong answer</p> }
                         <br/><br/>
 
-                        <p>{selectedSection.question4.questionText}</p><br/><br/>
+                      </>}
+
+                      {selectedSection.question4.questionText !== "" && selectedSection.question4.questionText !== null && <>
+                      <p>{selectedSection.question4.questionText}</p><br/><br/>
               
-                        {selectedSection.question4.answerOptions && selectedSection.question4.answerOptions.map((answer:any)=>{
-                          return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
-                            <RadioButton
-                            className="radioBtn" 
-                            style={{margin: "0rem 0.2rem"}} 
-                            inputId={answer}
-                            value={answer} 
-                            onChange={(e) => {setSelectedAnswer4(e.value);
-                              if(e.value !== undefined && e.value === selectedSection.question4.isCorrect ||
-                                selectedSection.question2 === "" ||
-                                selectedSection.question2 === null) {
-                                 setQuestion4(true);
-                                }
-                              }}
-                            checked={selectedAnswer4 === answer}/>
-                            <span>{answer}</span>
-                            <br/>
-                        </div>
-                        })}
-                        {selectedAnswer4 !== undefined && selectedAnswer4 === selectedSection.question4.isCorrect && <p>Great Job</p> }
-                        {selectedAnswer4 !== undefined && selectedAnswer4 !== selectedSection.question4.isCorrect && <p>Wrong answer</p> }
+              {selectedSection.question4.answerOptions && selectedSection.question4.answerOptions.map((answer:any)=>{
+                
+                  return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                  <RadioButton
+                  className="radioBtn" 
+                  style={{margin: "0rem 0.2rem"}} 
+                  inputId={answer}
+                  value={answer} 
+                  onChange={(e) => {setSelectedAnswer4(e.value);
+                    if(e.value !== undefined && e.value === selectedSection.question4.isCorrect ||
+                      selectedSection.question2 === "" ||
+                      selectedSection.question2 === null) {
+                       setQuestion4(true);
+                      }
+                    }}
+                  checked={selectedAnswer4 === answer}/>
+                  <span>{answer}</span>
+                  <br/>
+              </div>
+                
+
+              })}
+              {selectedAnswer4 !== undefined && selectedAnswer4 === selectedSection.question4.isCorrect && <p>Great Job</p> }
+              {selectedAnswer4 !== undefined && selectedAnswer4 !== selectedSection.question4.isCorrect && <p>Wrong answer</p> }
+                      </>}
+
                         <Button 
                             onClick={sectionSubmitHandler}
                             disabled={disabledStatus}>Submit</Button>
@@ -247,11 +275,11 @@ const CourseComponent = () => {
                                     controls />
                         {courseData && courseData.map((section:any)=>{
 
-                          return <Fragment> 
+                          return <Fragment key={section.id}> 
                           {!section.question1.isCorrect.includes("ready to proceed") && <>
-                                                    <p>{section.question1.questionText}</p>
+                                                  <p key={section.id}>{section.question1.questionText}</p>
                                                     {section.question1.answerOptions.map((answer:any)=>{
-                                                      return <Fragment>
+                                                      return <Fragment key={answer}>
                                                         <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                                                     <RadioButton
                                                     className="radioBtn" 

@@ -13,6 +13,7 @@ import { Button } from 'primereact/button'
 import { ProgressBar } from "primereact/progressbar";
 import { useLocalStorage } from "@/helper-function/HelperFunctions";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import classes from './CompanyData.module.css'
 
 
@@ -24,6 +25,7 @@ const EmployeeCourses = () => {
  const { updateEmployeeData, empSelection} = useEmployeeContext();
  const employee = useLocalStorage("EmployeeName")
  const thisCourse:any = useRef();
+ const router = useRouter();
 
     useEffect(()=>{
         let results:object[]=[];
@@ -93,7 +95,7 @@ const EmployeeCourses = () => {
                               
                               <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard} >
                              <div style={{padding:"1rem"}}>
-                                <span className={classes.courseTitle} onClick={(e)=> console.log(e.target.innerHTML)}>{item[0].replace(/_/g, ' ')}</span>
+                                <span className={classes.courseTitle} onClick={(e)=> {console.log(e.target.innerHTML); localStorage.setItem("CourseName", e.target.innerHTML); router.push('/employees/courses/course-detail');}}>{item[0].replace(/_/g, ' ')}</span>
                                 <span style={{float:"right"}}>{item[1]}</span><br/><br/>
                                 <span style={{padding: "2rem 0rem"}}>
                                     
