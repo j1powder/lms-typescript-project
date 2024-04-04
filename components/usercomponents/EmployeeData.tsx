@@ -56,8 +56,8 @@ const EmployeeData = () => {
        
        
         
-        console.log(employeeData)
-        console.log(company)
+        //console.log(employeeData)
+        //console.log(company)
 
 
         const sendToEmployeesPage = (e:any) => {

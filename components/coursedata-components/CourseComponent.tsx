@@ -34,7 +34,7 @@ const CourseComponent = () => {
     const [question2, setQuestion2] = useState<any>()
     const [question3, setQuestion3] = useState<any>()
     const [question4, setQuestion4] = useState<any>()
-    const [disabledStatus, setDisabledStatus] = useState<any>(true) 
+    const [disabledStatus, setDisabledStatus] = useState<Boolean>(true) 
     const course = useLocalStorage('CourseName');
      
     
@@ -72,44 +72,47 @@ const CourseComponent = () => {
 
         const sectionSubmitHandler = (e:any) => {
           e.preventDefault();
-          setDisabledStatus(true)
-          setQuestion1(false);
-          setQuestion2(false);
-          setQuestion3(false);
-          setQuestion4(false);
-          setSectionVisible(false);
+          // setDisabledStatus(true)
+          // setQuestion1(false);
+          // setQuestion2(false);
+          // setQuestion3(false);
+          // setQuestion4(false);
+          
           setSelectedAnswer1(undefined)
           setSelectedAnswer2(undefined)
           setSelectedAnswer3(undefined)
           setSelectedAnswer4(undefined)
 
+
+          setSectionVisible(false);
+
         }
 
 
 
- useEffect(()=>{
-  if(selectedSection && selectedSection.question1.questionText === "" || selectedSection && selectedSection.question1.questionText === null){
-    setQuestion1(true)
-  }
-  if(selectedSection && selectedSection.question2.questionText === "" || selectedSection && selectedSection.question2.questionText === null){
-    setQuestion2(true)
-  }
-  if(selectedSection && selectedSection.question3.questionText === "" || selectedSection && selectedSection.question3.questionText === null){
-    setQuestion3(true)
-    console.log("checked status")
-  }
-  if(selectedSection && selectedSection.question4.questionText === "" || selectedSection && selectedSection.question4.questionText === null){
-    setQuestion4(true)
-  }
-  if(question1 === true && 
-    question2 === true &&
-    question3 === true &&
-    question4 === true){
-      setDisabledStatus(false)
-    }
- },[question1, question2, question3, question4])
+//  useEffect(()=>{
+//   if(selectedSection && selectedSection.question1.questionText === "" || selectedSection && selectedSection.question1.questionText === null){
+//     setQuestion1(true)
+//   }
+//   if(selectedSection && selectedSection.question2.questionText === "" || selectedSection && selectedSection.question2.questionText === null){
+//     setQuestion2(true)
+//   }
+//   if(selectedSection && selectedSection.question3.questionText === "" || selectedSection && selectedSection.question3.questionText === null){
+//     setQuestion3(true)
+//     console.log("checked status")
+//   }
+//   if(selectedSection && selectedSection.question4.questionText === "" || selectedSection && selectedSection.question4.questionText === null){
+//     setQuestion4(true)
+//   }
+//   if(question1 === true && 
+//     question2 === true &&
+//     question3 === true &&
+//     question4 === true){
+//       setDisabledStatus(false)
+//     }
+//  },[question1, question2, question3, question4, sectionVisible])
 
- console.log(question1, question2, question3, question4)
+ console.log()
 
 
 
@@ -127,27 +130,38 @@ const CourseComponent = () => {
         onSelectionChange={(e) => {setSelectedSection(e.value); setSectionVisible(true)}} >
           <Column field="id" header="Section" sortable filter />
         </DataTable>
-        <Sidebar header={selectedSection && selectedSection.id ? selectedSection.id : "Welcome"} visible={sectionVisible}  onHide={() => setSectionVisible(false)} fullScreen>
+        <Sidebar 
+        header={selectedSection && selectedSection.id ? selectedSection.id : "Welcome"} 
+        visible={sectionVisible}  
+        onHide={() => {
+                    setSelectedAnswer1(undefined)
+                    setSelectedAnswer2(undefined)
+                    setSelectedAnswer3(undefined)
+                    setSelectedAnswer4(undefined)
+                    setSectionVisible(false);}} 
+        fullScreen>
+
         {selectedSection && selectedSection.video && <>
         <ReactPlayer
                                         key={selectedSection.id}
                                         onReady={() => { console.log("this is the onReady function")}}
                                         url={selectedSection.video && selectedSection.video}
                                         controls
-                                        onEnded={() => {console.log("this is the onEnded function")}}
+                                        onEnded={() => {console.log("this is the onEnded function"); setDisabledStatus(false)}}
                                     />
                         <br/>
                         <form  >
                         {selectedSection.question1.questionText !== "" && selectedSection.question1.questionText !== null && <> 
                         <p>{selectedSection.question1.questionText}</p>
                         {selectedSection.question1.answerOptions && selectedSection.question1.answerOptions.map((answer:any)=>{
-                          return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                          if(answer !== "" && answer !== null){
+                            return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                             <RadioButton 
                                         className="radioBtn" 
                                         style={{margin: "0rem 0.2rem"}} 
                                         inputId={answer}
                                         value={answer} 
-                                        onChange={(e) => {setSelectedAnswer1(e.value); console.log(e.value);
+                                        onChange={(e) => {setSelectedAnswer1(e.value);
                                           if(e.value !== undefined && e.value=== selectedSection.question1.isCorrect || 
                                             selectedSection.question1 === "" || 
                                             selectedSection.question1 === null
@@ -160,6 +174,8 @@ const CourseComponent = () => {
                                         <span>{answer}</span>
                                         <br/>
                                   </div>
+                          }
+
                         })}
                         {selectedAnswer1 !== undefined && selectedAnswer1 === selectedSection.question1.isCorrect && <p>Great Job</p> }
                         {selectedAnswer1 !== undefined && selectedAnswer1 !== selectedSection.question1.isCorrect && <p>Wrong answer</p> }
@@ -318,8 +334,8 @@ const CourseComponent = () => {
                             {section.question3.questionText !== "" && section.question3.questionText !== null && <>
                             <p>{section.question3.questionText}</p><br/>
                             {section.question3.answerOptions.map((answer:any)=>{
-                              return <Fragment>
-                                <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                              return <Fragment key ={answer}>
+                                <div  style={{margin:"0.4rem 0rem"}}>
                               <RadioButton
                               className="radioBtn" 
                               style={{margin: "0rem 0.2rem"}} 
@@ -338,8 +354,8 @@ const CourseComponent = () => {
                             {section.question4.questionText !== "" && !section.question4.questionText !== null && <>
                             <p>{section.question4.questionText}</p><br/><br/>
                             {section.question4.answerOptions.map((answer:any)=>{
-                              return <Fragment>
-                                <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                              return <Fragment key ={answer}>
+                                <div  style={{margin:"0.4rem 0rem"}}>
                               <RadioButton
                               className="radioBtn" 
                               style={{margin: "0rem 0.2rem"}} 
@@ -361,10 +377,6 @@ const CourseComponent = () => {
                         <Button >Submit Final Exam</Button>
         </Sidebar>
         
-        
-
-        
-
         </Card>
     </Fragment>
         }

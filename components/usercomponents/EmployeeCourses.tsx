@@ -7,9 +7,11 @@ import { DataContext, DataContextProvider, useDataContext } from '@/context/Data
 import { useEmployeeContext } from "@/context/EmployeeContext";
 import { Card } from 'primereact/card'  
 import { DataTable } from "primereact/datatable";
+import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
+
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
-
+import { InputText } from "primereact/inputtext";
 import { ProgressBar } from "primereact/progressbar";
 import { useLocalStorage } from "@/helper-function/HelperFunctions";
 import Link from "next/link";
@@ -21,6 +23,7 @@ import classes from './CompanyData.module.css'
 const EmployeeCourses = () => {
  const [courseProgress, setCourseProgress] = useState<any>(null);
  const [loading, setLoading] = useState<Boolean>(true);
+ const [searchValue, setSearchValue] = useState<String>();
  const {updateRowData, selection} = useDataContext();
  const { updateEmployeeData, empSelection} = useEmployeeContext();
  const employee = useLocalStorage("EmployeeName")
@@ -64,7 +67,11 @@ const EmployeeCourses = () => {
     // }
  
 
-    let percentage = 50;
+    //let percentage = 50;
+
+
+
+
 
 
      if(loading){
@@ -77,12 +84,20 @@ const EmployeeCourses = () => {
         <Link href="/employees"> <Button>Back</Button></Link>
         <h3>There is currently no course data for this user</h3>
         </Card>
+
      } else {
         return <Fragment>
             <h4>Course Data will go here</h4>
             <Card >
             <Link href="/employees"> <Button>Back</Button></Link>
-          <h5>Company Data Component</h5>
+          
+          <div>
+          <p>Course Search</p>
+          <InputText type="text" value={searchValue} onChange={(e) => setSearchValue(e.target.value.toLowerCase())} placeholder="enter course name" />
+          </div>
+
+         
+
           
           
        <br/>
@@ -92,10 +107,20 @@ const EmployeeCourses = () => {
                     if(item[0] !== "Employee_Name" && item[0] !== "Percent_Complete" && item[0] !== "id") {
                         return <Fragment key={item[0]}>
                           {/* <Link href="/employees/courses/course-detail" style={{textDecoration: "none", color:"black"}}> */}
+                              {item[0].replace(/_/g, ' ').toLowerCase().includes(searchValue) ?
+
                               
-                              <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard} >
+                              <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard} onClick={()=>console.log(item[0].replace(/_/g, ' '), item[1])} >
                              <div style={{padding:"1rem"}}>
-                                <span className={classes.courseTitle} onClick={(e)=> {console.log(e.target.innerHTML); localStorage.setItem("CourseName", e.target.innerHTML); router.push('/employees/courses/course-detail');}}>{item[0].replace(/_/g, ' ')}</span>
+                                <span 
+                                className={classes.courseTitle} 
+                                onClick={(e)=> {
+                                                console.log(e.target.innerHTML); 
+                                                localStorage.setItem("CourseName", e.target.innerHTML); 
+                                                router.push('/employees/courses/course-detail');
+                                                }}>
+                                    {item[0].replace(/_/g, ' ')}
+                                </span>
                                 <span style={{float:"right"}}>{item[1]}</span><br/><br/>
                                 <span style={{padding: "2rem 0rem"}}>
                                     
@@ -103,6 +128,24 @@ const EmployeeCourses = () => {
                                 </span>
                                 </div>
                             </li>
+                            :                               <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard} onClick={()=>console.log(item[0].replace(/_/g, ' '), item[1])} >
+                            <div style={{padding:"1rem"}}>
+                               <span 
+                               className={classes.courseTitle} 
+                               onClick={(e)=> {
+                                               console.log(e.target.innerHTML); 
+                                               localStorage.setItem("CourseName", e.target.innerHTML); 
+                                               router.push('/employees/courses/course-detail');
+                                               }}>
+                                   {item[0].replace(/_/g, ' ')}
+                               </span>
+                               <span style={{float:"right"}}>{item[1]}</span><br/><br/>
+                               <span style={{padding: "2rem 0rem"}}>
+                                   
+                               <ProgressBar value={item[1] === "Pass" ? 100 : 0} />
+                               </span>
+                               </div>
+                           </li>}
                             {/* </Link> */}
                             </Fragment>
                     }
