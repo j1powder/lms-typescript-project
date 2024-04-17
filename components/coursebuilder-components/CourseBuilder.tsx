@@ -184,11 +184,12 @@ const CourseBuilder = () => {
 
       <form>
         
-          <label style={{ width: "90%" }}  >
+          <label style={{ width: "90%" }} className={classes.label} >
             Course Name:
             <InputText
               ref={courseName}
-              type="text"
+              type="text"j
+              className={classes.inputfield}
             />
           </label>
           <br />
@@ -206,44 +207,45 @@ const CourseBuilder = () => {
 
       <h2>Add Sections</h2>
       <form className={classes.entireform}>
-        <label className={classes.cbuilderlabel}>
-          Section Title
+        <label className={classes.label}>
+          Section Title:
         </label>
         <InputText ref={sectionTitle} type="text" />
-        <label className={classes.cbuilderlabel}>
-          Section Order Number
+        <label className={classes.label}>
+          Section Order Number:
         </label>
         <InputText ref={sectionNumber} type="number" value={counter} />
-        <label className={classes.cbuilderlabel}>Add Video</label>
+        <label className={classes.label}>Add Video:</label>
         <InputText ref={sectionVideo} type="text" />
         <br />
         <br />
-        <label className={classes.cbuilderlabel}>
-          <b>Question 1</b>
+        <label className={classes.label}>
+          <b>Question 1: </b>
         </label>
         <InputText ref={question1} type="text" />
-        <p className={classes.answers}>Answer Options</p>
-        <label className={classes.cbuilderlabel}>answer: </label>
+        <p className={classes.answers}><b>Answer Options</b></p>
+        <label className={classes.label}>answer: </label>
         <InputText ref={answer1} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
+        <label className={classes.label}>answer: </label>
         <InputText ref={answer2} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
+        <label className={classes.label}>answer: </label>
         <InputText ref={answer3} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
+        <label className={classes.label}>answer: </label>
         <InputText ref={answer4} type="text" />
-        <label className={classes.cbuilderlabel}>
-          Correct Answer:{" "}
+        <br/><br/>
+        <label className={classes.label}>
+          Correct Answer:
         </label>
         <InputText ref={q1Correct} type="text" />
-
+        <br/><br/>
         <br />
         <br />
-        <label className={classes.cbuilderlabel}>
-          <b>Question 2</b>
+        <label className={classes.label}>
+          <b>Question 2:</b>
         </label>
         <InputText ref={question2} type="text" />
         <p className={classes.answers}>Answer Options</p>
-        <label className={classes.cbuilderlabel}>answer: </label>
+        <label className={classes.label}>answer: </label>
         <InputText ref={answer5} type="text" />
         <label className={classes.cbuilderlabel}>answer: </label>
         <InputText ref={answer6} type="text" />
@@ -252,7 +254,7 @@ const CourseBuilder = () => {
         <label className={classes.cbuilderlabel}>answer: </label>
         <InputText ref={answer8} type="text" />
         <label className={classes.cbuilderlabel}>
-          Correct Answer:{" "}
+          Correct Answer:
         </label>
         <InputText ref={q2Correct} type="text" />
 
@@ -273,7 +275,7 @@ const CourseBuilder = () => {
         <label className={classes.cbuilderlabel}>answer: </label>
         <InputText ref={answer12} type="text" />
         <label className={classes.cbuilderlabel}>
-          Correct Answer:{" "}
+          Correct Answer:
         </label>
         <InputText ref={q3Correct} type="text" />
 
@@ -294,7 +296,7 @@ const CourseBuilder = () => {
         <label className={classes.cbuilderlabel}>answer: </label>
         <InputText ref={answer16} type="text" />
         <label className={classes.cbuilderlabel}>
-          Correct Answer:{" "}
+          Correct Answer:
         </label>
         <InputText ref={q4Correct} type="text" />
 
