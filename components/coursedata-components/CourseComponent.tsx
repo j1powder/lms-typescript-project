@@ -164,7 +164,8 @@ const CourseComponent = () => {
                         {selectedSection.question2.questionText !== "" && selectedSection.question2.questionText !== null && <> 
                         <p>{selectedSection.question2.questionText}</p>
                         {selectedSection.question2.answerOptions && selectedSection.question2.answerOptions.map((answer:any)=>{
-                          return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                          if(answer !== "" && answer !== null){
+                            return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                             <RadioButton 
                                         style={{margin: "0rem 0.2rem"}}
                                         className="radioBtn"  
@@ -183,6 +184,8 @@ const CourseComponent = () => {
                                         <span>{answer}</span>
                                         <br/>
                                     </div>
+                          }
+
                         })}
                         {selectedAnswer2 !== undefined && selectedAnswer2 === selectedSection.question2.isCorrect && <p>Great Job</p> }
                         {selectedAnswer2 !== undefined && selectedAnswer2 !== selectedSection.question2.isCorrect && <p>Wrong answer</p> }
@@ -191,27 +194,30 @@ const CourseComponent = () => {
                         </>}
 
                       {selectedSection.question3.questionText !== "" && selectedSection.question3.questionText !== null && <>
-                      <p>{selectedSection.question3.questionText}</p><br/><br/>
+                      <p>{selectedSection.question3.questionText}</p>
                         {selectedSection.question3.answerOptions && selectedSection.question3.answerOptions.map((answer:any)=>{
-                         
-                            return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
-                            <RadioButton
-                            className="radioBtn"  
-                            style={{margin: "0rem 0.2rem"}} 
-                            inputId={answer}
-                            value={answer}
-                            disabled={disabledStatus} 
-                            onChange={(e) => {setSelectedAnswer3(e.value);
-                              if(e.value !== undefined && e.value === selectedSection.question3.isCorrect ||
-                                selectedSection.question2 === "" ||
-                                selectedSection.question2 === null) {
-                                 setQuestion3(true);
-                                }
-                            }}
-                            checked={selectedAnswer3 === answer}/>
-                            <span>{answer}</span>
-                            <br/>
-                            </div>
+                         if(answer !== "" && answer !== null){
+                          return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                          <RadioButton
+                          className="radioBtn"  
+                          style={{margin: "0rem 0.2rem"}} 
+                          inputId={answer}
+                          value={answer}
+                          disabled={disabledStatus} 
+                          onChange={(e) => {setSelectedAnswer3(e.value);
+                            if(e.value !== undefined && e.value === selectedSection.question3.isCorrect ||
+                              selectedSection.question2 === "" ||
+                              selectedSection.question2 === null) {
+                               setQuestion3(true);
+                              }
+                          }}
+                          checked={selectedAnswer3 === answer}/>
+                          <span>{answer}</span>
+                          <br/>
+                          </div>
+
+                         }
+
                           
                           
 
@@ -223,10 +229,10 @@ const CourseComponent = () => {
                       </>}
 
                       {selectedSection.question4.questionText !== "" && selectedSection.question4.questionText !== null && <>
-                      <p>{selectedSection.question4.questionText}</p><br/><br/>
+                      <p>{selectedSection.question4.questionText}</p>
               
               {selectedSection.question4.answerOptions && selectedSection.question4.answerOptions.map((answer:any)=>{
-                
+                if(answer !== "" && answer !== null){
                   return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                   <RadioButton
                   className="radioBtn" 
@@ -245,13 +251,16 @@ const CourseComponent = () => {
                   <span>{answer}</span>
                   <br/>
               </div>
+
+                }
+
                 
 
               })}
               {selectedAnswer4 !== undefined && selectedAnswer4 === selectedSection.question4.isCorrect && <p>Great Job</p> }
               {selectedAnswer4 !== undefined && selectedAnswer4 !== selectedSection.question4.isCorrect && <p>Wrong answer</p> }
                       </>}
-
+                    <br/>
                         <Button 
                             onClick={sectionSubmitHandler}
                             disabled={disabledStatus}>Submit</Button>
@@ -276,7 +285,8 @@ const CourseComponent = () => {
                           {!section.question1.isCorrect.includes("ready to proceed") && <>
                                                   <p key={section.id}>{section.question1.questionText}</p>
                                                     {section.question1.answerOptions.map((answer:any)=>{
-                                                      return <Fragment key={answer}>
+                                                      if(answer !== "" && answer !== null){
+                                                        return <Fragment key={answer}>
                                                         <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                                                     <RadioButton
                                                     className="radioBtn" 
@@ -289,6 +299,8 @@ const CourseComponent = () => {
                                                     <br/>
                                                 </div>
                                                       </Fragment>
+                                                      }
+
                                                     })}
                                               <br/>
                                           </> } 
@@ -297,17 +309,21 @@ const CourseComponent = () => {
                               {section.question2.isCorrect !== "" && section.question2.isCorrect !== null && <>
                               <p>{section.question2.questionText}</p>
                             {section.question2.answerOptions.map((answer:any)=>{
-                              return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
-                              <RadioButton
-                              className="radioBtn" 
-                              style={{margin: "0rem 0.2rem"}} 
-                              inputId={answer}
-                              value={answer} 
-                              onChange={()=> console.log("Hello there")}
-                              checked={selectedAnswer4 === answer}/>
-                              <span>{answer}</span>
-                              <br/>
-                          </div>
+                              if(answer !== "" && answer !== null){
+                                return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
+                                <RadioButton
+                                className="radioBtn" 
+                                style={{margin: "0rem 0.2rem"}} 
+                                inputId={answer}
+                                value={answer} 
+                                onChange={()=> console.log("Hello there")}
+                                checked={selectedAnswer4 === answer}/>
+                                <span>{answer}</span>
+                                <br/>
+                            </div>
+
+                              }
+
                             })}
                             <br/>
                               </>}
@@ -315,7 +331,8 @@ const CourseComponent = () => {
                             {section.question3.questionText !== "" && section.question3.questionText !== null && <>
                             <p>{section.question3.questionText}</p><br/>
                             {section.question3.answerOptions.map((answer:any)=>{
-                              return <Fragment key ={answer}>
+                              if(answer !== "" && answer !== null){
+                                return <Fragment key ={answer}>
                                 <div  style={{margin:"0.4rem 0rem"}}>
                               <RadioButton
                               className="radioBtn" 
@@ -328,6 +345,8 @@ const CourseComponent = () => {
                               <br/>
                           </div>
                               </Fragment>
+                              }
+                              
                             })}
                             <br/>
                             </>}
@@ -335,7 +354,8 @@ const CourseComponent = () => {
                             {section.question4.questionText !== "" && !section.question4.questionText !== null && <>
                             <p>{section.question4.questionText}</p><br/><br/>
                             {section.question4.answerOptions.map((answer:any)=>{
-                              return <Fragment key ={answer}>
+                              if(answer !== "" && answer !== null){
+                                return <Fragment key ={answer}>
                                 <div  style={{margin:"0.4rem 0rem"}}>
                               <RadioButton
                               className="radioBtn" 
@@ -348,6 +368,8 @@ const CourseComponent = () => {
                               <br/>
                           </div>
                               </Fragment>
+                              }
+
                             })}
                             <br/>
                             </>}

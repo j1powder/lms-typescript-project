@@ -33,11 +33,11 @@ const Header:React.FC = () => {
     },
     {
         label: 'Course Builder',
+        command: () => router.push('/coursebuilder')
         
     },
     {
         label: 'Sign In',
-        
         command: ()=> router.push('/dashboard')
     }
 ];
