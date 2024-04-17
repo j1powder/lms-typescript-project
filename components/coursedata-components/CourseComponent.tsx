@@ -82,35 +82,11 @@ const CourseComponent = () => {
           setSelectedAnswer2(undefined)
           setSelectedAnswer3(undefined)
           setSelectedAnswer4(undefined)
-
-
-          setSectionVisible(false);
-
+          setSectionVisible(false)
+          setDisabledStatus(true)
         }
 
 
-
-//  useEffect(()=>{
-//   if(selectedSection && selectedSection.question1.questionText === "" || selectedSection && selectedSection.question1.questionText === null){
-//     setQuestion1(true)
-//   }
-//   if(selectedSection && selectedSection.question2.questionText === "" || selectedSection && selectedSection.question2.questionText === null){
-//     setQuestion2(true)
-//   }
-//   if(selectedSection && selectedSection.question3.questionText === "" || selectedSection && selectedSection.question3.questionText === null){
-//     setQuestion3(true)
-//     console.log("checked status")
-//   }
-//   if(selectedSection && selectedSection.question4.questionText === "" || selectedSection && selectedSection.question4.questionText === null){
-//     setQuestion4(true)
-//   }
-//   if(question1 === true && 
-//     question2 === true &&
-//     question3 === true &&
-//     question4 === true){
-//       setDisabledStatus(false)
-//     }
-//  },[question1, question2, question3, question4, sectionVisible])
 
  console.log()
 
@@ -138,7 +114,8 @@ const CourseComponent = () => {
                     setSelectedAnswer2(undefined)
                     setSelectedAnswer3(undefined)
                     setSelectedAnswer4(undefined)
-                    setSectionVisible(false);}} 
+                    setSectionVisible(false);
+                    setDisabledStatus(true);}} 
         fullScreen>
 
         {selectedSection && selectedSection.video && <>
@@ -157,6 +134,7 @@ const CourseComponent = () => {
                           if(answer !== "" && answer !== null){
                             return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                             <RadioButton 
+                                        disabled={disabledStatus}
                                         className="radioBtn" 
                                         style={{margin: "0rem 0.2rem"}} 
                                         inputId={answer}
@@ -191,7 +169,8 @@ const CourseComponent = () => {
                                         style={{margin: "0rem 0.2rem"}}
                                         className="radioBtn"  
                                         inputId={answer}
-                                        value={answer} 
+                                        value={answer}
+                                        disabled={disabledStatus} 
                                         onChange={(e) => {setSelectedAnswer2(e.value); 
                                           if(e.value !== undefined && e.value === selectedSection.question2.isCorrect ||
                                             selectedSection.question2 === "" ||
@@ -220,7 +199,8 @@ const CourseComponent = () => {
                             className="radioBtn"  
                             style={{margin: "0rem 0.2rem"}} 
                             inputId={answer}
-                            value={answer} 
+                            value={answer}
+                            disabled={disabledStatus} 
                             onChange={(e) => {setSelectedAnswer3(e.value);
                               if(e.value !== undefined && e.value === selectedSection.question3.isCorrect ||
                                 selectedSection.question2 === "" ||
@@ -252,7 +232,8 @@ const CourseComponent = () => {
                   className="radioBtn" 
                   style={{margin: "0rem 0.2rem"}} 
                   inputId={answer}
-                  value={answer} 
+                  value={answer}
+                  disabled={disabledStatus} 
                   onChange={(e) => {setSelectedAnswer4(e.value);
                     if(e.value !== undefined && e.value === selectedSection.question4.isCorrect ||
                       selectedSection.question2 === "" ||

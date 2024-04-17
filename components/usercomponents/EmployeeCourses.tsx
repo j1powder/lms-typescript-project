@@ -23,7 +23,7 @@ import classes from './CompanyData.module.css'
 const EmployeeCourses = () => {
  const [courseProgress, setCourseProgress] = useState<any>(null);
  const [loading, setLoading] = useState<Boolean>(true);
- const [searchValue, setSearchValue] = useState<String>();
+ const [searchValue, setSearchValue] = useState<String>("");
  const {updateRowData, selection} = useDataContext();
  const { updateEmployeeData, empSelection} = useEmployeeContext();
  const employee = useLocalStorage("EmployeeName")
@@ -93,7 +93,7 @@ const EmployeeCourses = () => {
           
           <div>
           <p>Course Search</p>
-          <InputText type="text" value={searchValue} onChange={(e) => setSearchValue(e.target.value.toLowerCase())} placeholder="enter course name" />
+          <InputText type="text" value={searchValue} onChange={(e) => {setSearchValue(e.target.value.toLowerCase()); console.log(searchValue)}} placeholder="enter course name" />
           </div>
 
          
@@ -128,25 +128,9 @@ const EmployeeCourses = () => {
                                 </span>
                                 </div>
                             </li>
-                            :                               <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard} onClick={()=>console.log(item[0].replace(/_/g, ' '), item[1])} >
-                            <div style={{padding:"1rem"}}>
-                               <span 
-                               className={classes.courseTitle} 
-                               onClick={(e)=> {
-                                               console.log(e.target.innerHTML); 
-                                               localStorage.setItem("CourseName", e.target.innerHTML); 
-                                               router.push('/employees/courses/course-detail');
-                                               }}>
-                                   {item[0].replace(/_/g, ' ')}
-                               </span>
-                               <span style={{float:"right"}}>{item[1]}</span><br/><br/>
-                               <span style={{padding: "2rem 0rem"}}>
-                                   
-                               <ProgressBar value={item[1] === "Pass" ? 100 : 0} />
-                               </span>
-                               </div>
-                           </li>}
-                            {/* </Link> */}
+                            :   null   }
+
+                            
                             </Fragment>
                     }
                     
