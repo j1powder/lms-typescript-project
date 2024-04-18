@@ -121,7 +121,7 @@ const EmployeeCourses = () => {
                                                 }}>
                                     {item[0].replace(/_/g, ' ')}
                                 </span>
-                                <span style={{float:"right"}}>{item[1]}</span><br/><br/>
+                                <span style={{float:"right"}}>Progress: {item[1]}</span><br/><br/>
                                 <span style={{padding: "2rem 0rem"}}>
                                     
                                 <ProgressBar value={item[1] === "Pass" ? 100 : 0} />

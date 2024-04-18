@@ -162,7 +162,7 @@ const CourseBuilder = () => {
 
   return (
     <Fragment>
-    
+    <div className={classes.pageLayout}>
       <h2>Need to create a new course?</h2>
       <h4>
         Please read the instructions below in order to create a new course
@@ -188,7 +188,7 @@ const CourseBuilder = () => {
             Course Name:
             <InputText
               ref={courseName}
-              type="text"j
+              type="text"
               className={classes.inputfield}
             />
           </label>
@@ -210,101 +210,100 @@ const CourseBuilder = () => {
         <label className={classes.label}>
           Section Title:
         </label>
-        <InputText ref={sectionTitle} type="text" />
+        <InputText ref={sectionTitle} type="text" className={classes.inputfield }/>
         <label className={classes.label}>
           Section Order Number:
         </label>
-        <InputText ref={sectionNumber} type="number" value={counter} />
+        <InputText ref={sectionNumber} type="number" value={counter} className={classes.inputfield } />
         <label className={classes.label}>Add Video:</label>
-        <InputText ref={sectionVideo} type="text" />
+        <InputText ref={sectionVideo} type="text" className={classes.inputfield }/>
         <br />
         <br />
         <label className={classes.label}>
           <b>Question 1: </b>
         </label>
-        <InputText ref={question1} type="text" />
+        <InputText ref={question1} type="text" className={classes.inputfield } />
         <p className={classes.answers}><b>Answer Options</b></p>
         <label className={classes.label}>answer: </label>
-        <InputText ref={answer1} type="text" />
+        <InputText ref={answer1} type="text" className={classes.inputfield } />
         <label className={classes.label}>answer: </label>
-        <InputText ref={answer2} type="text" />
+        <InputText ref={answer2} type="text" className={classes.inputfield } />
         <label className={classes.label}>answer: </label>
-        <InputText ref={answer3} type="text" />
+        <InputText ref={answer3} type="text" className={classes.inputfield } />
         <label className={classes.label}>answer: </label>
-        <InputText ref={answer4} type="text" />
+        <InputText ref={answer4} type="text" className={classes.inputfield } />
         <br/><br/>
         <label className={classes.label}>
           Correct Answer:
         </label>
-        <InputText ref={q1Correct} type="text" />
+        <InputText ref={q1Correct} type="text" className={classes.inputfield }/>
         <br/><br/>
-        <br />
-        <br />
+        
         <label className={classes.label}>
           <b>Question 2:</b>
         </label>
-        <InputText ref={question2} type="text" />
-        <p className={classes.answers}>Answer Options</p>
+        <InputText ref={question2} type="text" className={classes.inputfield }/>
+        <p className={classes.answers}><b>Answer Options</b></p>
         <label className={classes.label}>answer: </label>
-        <InputText ref={answer5} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer6} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer7} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer8} type="text" />
-        <label className={classes.cbuilderlabel}>
+        <InputText ref={answer5} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer6} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer7} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer8} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>
           Correct Answer:
         </label>
-        <InputText ref={q2Correct} type="text" />
+        <InputText ref={q2Correct} type="text" className={classes.inputfield }/>
 
         <br />
         <br />
         
-        <label className={classes.cbuilderlabel}>
+        <label className={classes.label}>
           <b>Question 3</b>
         </label>
-        <InputText ref={question3} type="text" />
-        <p className={classes.answers}>Answer Options</p>
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer9} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer10} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer11} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer12} type="text" />
-        <label className={classes.cbuilderlabel}>
+        <InputText ref={question3} type="text" className={classes.inputfield }/>
+        <p className={classes.answers}><b>Answer Options</b></p>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer9} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer10} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer11} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer12} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>
           Correct Answer:
         </label>
-        <InputText ref={q3Correct} type="text" />
+        <InputText ref={q3Correct} type="text" className={classes.inputfield }/>
 
         <br />
         <br />
 
-        <label className={classes.cbuilderlabel}>
+        <label className={classes.label}>
           <b>Question 4</b>
         </label>
-        <InputText ref={question4} type="text" />
-        <p className={classes.answers}>Answer Options</p>
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer13} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer14} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer15} type="text" />
-        <label className={classes.cbuilderlabel}>answer: </label>
-        <InputText ref={answer16} type="text" />
-        <label className={classes.cbuilderlabel}>
+        <InputText ref={question4} type="text" className={classes.inputfield }/>
+        <p className={classes.answers}><b>Answer Options</b></p>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer13} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer14} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer15} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>answer: </label>
+        <InputText ref={answer16} type="text" className={classes.inputfield }/>
+        <label className={classes.label}>
           Correct Answer:
         </label>
-        <InputText ref={q4Correct} type="text" />
+        <InputText ref={q4Correct} type="text" className={classes.inputfield }/>
 
         <br />
         <br />
         <Button type="button" onClick={createSubCollection}>Add Section</Button>
       </form> 
-    
+      </div>
   </Fragment>
   )
 }

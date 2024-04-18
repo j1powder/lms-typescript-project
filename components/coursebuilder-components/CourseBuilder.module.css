@@ -2,8 +2,13 @@
 
 .inputfield {
 display: block;
+width: 70%;
 }
 
 .label {
 display: block;
+}
+
+.pageLayout {
+    margin:1rem;
 }

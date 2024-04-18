@@ -24,6 +24,7 @@ const CourseComponent = () => {
     const [loading, setLoading] = useState<Boolean>(true)
     const [showSectionDetails, setShowSectionDetails] = useState<Boolean>(false);
     const [selectedSection, setSelectedSection] = useState<any>()
+    const [lastSelectedRow, setLastSelectedRow] = useState<any>();
     const [sectionVisible, setSectionVisible] = useState<any>(false)
     const [finalVisible, setFinalVisible] = useState<any>(false)
     const [selectedAnswer1, setSelectedAnswer1] = useState<any>()
@@ -88,7 +89,8 @@ const CourseComponent = () => {
 
 
 
- console.log()
+ console.log(selectedSection)
+ console.log(lastSelectedRow)
 
 
 
@@ -103,7 +105,7 @@ const CourseComponent = () => {
         <Link href='/employees/courses'><Button>Back</Button></Link>
         <h3>Course Component</h3>
         <DataTable value={courseData} selectionMode="single" selection={selectedSection}
-        onSelectionChange={(e) => {setSelectedSection(e.value); setSectionVisible(true)}} >
+        onSelectionChange={(e) => {setSelectedSection(e.value); setLastSelectedRow(e.value); setSectionVisible(true)}} >
           <Column field="id" header="Section" sortable filter />
         </DataTable>
         <Sidebar 
