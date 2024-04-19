@@ -37,6 +37,7 @@ const CourseComponent = () => {
     const [question4, setQuestion4] = useState<any>()
     const [disabledStatus, setDisabledStatus] = useState<Boolean>(true) 
     const course = useLocalStorage('CourseName');
+    const sectionStatus = useLocalStorage('sectionNumber');
      
     
     //const formRef = useRef(); 
@@ -90,10 +91,11 @@ const CourseComponent = () => {
 
 
  console.log(selectedSection)
- console.log(lastSelectedRow)
-
-
-
+ console.log(sectionStatus)
+ //console.log(lastSelectedRow)
+ const r = /\d+/;
+ const sectionNumber = sectionStatus.match(r)
+console.log(sectionNumber)
           
         if(loading){
           return <h3>Loading data...</h3>
@@ -104,10 +106,35 @@ const CourseComponent = () => {
         <Card>
         <Link href='/employees/courses'><Button>Back</Button></Link>
         <h3>Course Component</h3>
-        <DataTable value={courseData} selectionMode="single" selection={selectedSection}
+          <ul>
+            {courseData && courseData.map((section:any)=>{
+              return <li 
+                        key={section.id} 
+                        className={classes.courseCard}
+                        style={section.orderNumber <= sectionNumber || sectionStatus == "Pass" ? {backgroundColor:"#daedf4"} : {backgroundColor:"none"}} 
+                        onClick={(e)=>{setSelectedSection(section); setSectionVisible(true);}}>
+                          <span>{section.id}</span><br/>
+                          <span style={{float:"right", fontSize:"15px"}}>{section.orderNumber <= sectionNumber || sectionStatus == "Pass" ? "section completed" : null}</span>
+                      </li>
+            })}
+        <li 
+            onClick={()=>setFinalVisible(true)} 
+            className={classes.courseCard}
+            style={sectionStatus == "Pass" ? {backgroundColor:"#daedf4"} : {backgroundColor:"none"}} 
+            >
+          <span>Conclusion - Final Knowledge Check</span>
+          <span style={{float:"right", fontSize:"15px"}}>{sectionStatus == "Pass" ? "section completed" : null}</span>
+        </li>
+          </ul>
+
+        <br/>
+        <hr/>
+        <br/>
+
+{/*         <DataTable value={courseData} selectionMode="single" selection={selectedSection}
         onSelectionChange={(e) => {setSelectedSection(e.value); setLastSelectedRow(e.value); setSectionVisible(true)}} >
           <Column field="id" header="Section" sortable filter />
-        </DataTable>
+        </DataTable> */}
         <Sidebar 
         header={selectedSection && selectedSection.id ? selectedSection.id : "Welcome"} 
         visible={sectionVisible}  
@@ -121,6 +148,7 @@ const CourseComponent = () => {
         fullScreen>
 
         {selectedSection && selectedSection.video && <>
+        <p><b>Watch the Video and then answer the questions below.</b></p>
         <ReactPlayer
                                         key={selectedSection.id}
                                         onReady={() => { console.log("this is the onReady function")}}
@@ -163,7 +191,7 @@ const CourseComponent = () => {
                         
                         </>}
 
-                        {selectedSection.question2.questionText !== "" && selectedSection.question2.questionText !== null && <> 
+                        {selectedSection.question2 && selectedSection.question2.questionText !== "" && selectedSection.question2.questionText !== null && <> 
                         <p>{selectedSection.question2.questionText}</p>
                         {selectedSection.question2.answerOptions && selectedSection.question2.answerOptions.map((answer:any)=>{
                           if(answer !== "" && answer !== null){
@@ -195,7 +223,7 @@ const CourseComponent = () => {
                         
                         </>}
 
-                      {selectedSection.question3.questionText !== "" && selectedSection.question3.questionText !== null && <>
+                      {selectedSection.question3 && selectedSection.question3.questionText !== "" && selectedSection.question3.questionText !== null && <>
                       <p>{selectedSection.question3.questionText}</p>
                         {selectedSection.question3.answerOptions && selectedSection.question3.answerOptions.map((answer:any)=>{
                          if(answer !== "" && answer !== null){
@@ -230,7 +258,7 @@ const CourseComponent = () => {
 
                       </>}
 
-                      {selectedSection.question4.questionText !== "" && selectedSection.question4.questionText !== null && <>
+                      {selectedSection.question4 && selectedSection.question4.questionText !== "" && selectedSection.question4.questionText !== null && <>
                       <p>{selectedSection.question4.questionText}</p>
               
               {selectedSection.question4.answerOptions && selectedSection.question4.answerOptions.map((answer:any)=>{
@@ -270,10 +298,10 @@ const CourseComponent = () => {
 
       </>  }
         </Sidebar>
-        <hr/>
-        <div onClick={()=>setFinalVisible(true)} className={classes.finalCard}>
+{/*         <hr/>
+        <div onClick={()=>setFinalVisible(true)} className={classes.courseCard}>
           <h4>Conclusion - Final Knowledge Check</h4>
-        </div>
+        </div> */}
         <Sidebar visible={finalVisible} onHide={() => setFinalVisible(false)} fullScreen>
                         <h4>Final Knowledge Check</h4>
                         <ReactPlayer 
@@ -308,7 +336,7 @@ const CourseComponent = () => {
                                           </> } 
 
 
-                              {section.question2.isCorrect !== "" && section.question2.isCorrect !== null && <>
+                              {section.question2 && section.question2.isCorrect !== "" && section.question2.isCorrect !== null && <>
                               <p>{section.question2.questionText}</p>
                             {section.question2.answerOptions.map((answer:any)=>{
                               if(answer !== "" && answer !== null){
@@ -330,7 +358,7 @@ const CourseComponent = () => {
                             <br/>
                               </>}
                             
-                            {section.question3.questionText !== "" && section.question3.questionText !== null && <>
+                            {section.question3 && section.question3.questionText !== "" && section.question3.questionText !== null && <>
                             <p>{section.question3.questionText}</p><br/>
                             {section.question3.answerOptions.map((answer:any)=>{
                               if(answer !== "" && answer !== null){
@@ -353,7 +381,7 @@ const CourseComponent = () => {
                             <br/>
                             </>}
 
-                            {section.question4.questionText !== "" && !section.question4.questionText !== null && <>
+                            {section.question4 && section.question4.questionText !== "" && !section.question4.questionText !== null && <>
                             <p>{section.question4.questionText}</p><br/><br/>
                             {section.question4.answerOptions.map((answer:any)=>{
                               if(answer !== "" && answer !== null){

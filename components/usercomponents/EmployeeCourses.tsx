@@ -38,7 +38,8 @@ const EmployeeCourses = () => {
         const querySnapshot = await getDocs(q);
 
        //const querySnapshot = await getDocs(collection(projectFirestore, "course-progress"));
-        querySnapshot.docs.map((doc) => {
+       console.log(querySnapshot.docs) 
+       querySnapshot.docs.map((doc) => {
           // doc.data() is never undefined for query doc snapshots
           return results.push({id: doc.id, ...doc.data()});
         });
@@ -69,8 +70,16 @@ const EmployeeCourses = () => {
 
     //let percentage = 50;
 
+    const r = /\d+/;
 
-
+    const valueTemplate = (value:any) => {
+      return (
+          <Fragment>
+              <b></b>
+          </Fragment>
+      );
+  };
+  console.log(courseProgress)
 
 
 
@@ -103,19 +112,24 @@ const EmployeeCourses = () => {
        <br/>
 
             <ul>
-                {courseProgress && courseProgress[0] && Object.entries(courseProgress[0]).map((item:any)=>{
+                {courseProgress && courseProgress[0] && Object.entries(courseProgress[0]).sort().map((item:any)=>{
                     if(item[0] !== "Employee_Name" && item[0] !== "Percent_Complete" && item[0] !== "id") {
                         return <Fragment key={item[0]}>
                           {/* <Link href="/employees/courses/course-detail" style={{textDecoration: "none", color:"black"}}> */}
                               {item[0].replace(/_/g, ' ').toLowerCase().includes(searchValue) ?
 
                               
-                              <li key={item[0]} style={{listStyle:"none"}} className={classes.courseCard} onClick={()=>console.log(item[0].replace(/_/g, ' '), item[1])} >
-                             <div style={{padding:"1rem"}}>
+                              <li 
+                                key={item[0]} style={{listStyle:"none"}} 
+                                className={classes.courseCard} 
+                                onClick={()=>{console.log(item[0].replace(/_/g, ' '), item[1]);
+                                              localStorage.setItem('sectionNumber', item[1]); }} 
+                                >
+                                <div style={{padding:"1rem"}}>
                                 <span 
                                 className={classes.courseTitle} 
                                 onClick={(e)=> {
-                                                console.log(e.target.innerHTML); 
+                                                //console.log(e.target.innerHTML); 
                                                 localStorage.setItem("CourseName", e.target.innerHTML); 
                                                 router.push('/employees/courses/course-detail');
                                                 }}>
@@ -124,7 +138,7 @@ const EmployeeCourses = () => {
                                 <span style={{float:"right"}}>Progress: {item[1]}</span><br/><br/>
                                 <span style={{padding: "2rem 0rem"}}>
                                     
-                                <ProgressBar value={item[1] === "Pass" ? 100 : 0} />
+                                <ProgressBar color={item[1] === "Pass" ? "#00ab00" : item[1].match(r) ? "#ee9f27" : 0} value={item[1] === "Pass" ? 100 : item[1].match(r) ? 50 : 0} displayValueTemplate={valueTemplate} />
                                 </span>
                                 </div>
                             </li>
