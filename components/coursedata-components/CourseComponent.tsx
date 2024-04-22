@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useState, useRef, useReducer } from "react";
 import { projectFirestore } from "@/FirebaseConfig";
-import { getDocs, collection, query, orderBy } from "firebase/firestore";
+import { getDocs, collection, query, orderBy, where, setDoc, doc } from "firebase/firestore";
 import { Card } from 'primereact/card'
 import { Button } from 'primereact/button'
 import Link from "next/link";
@@ -38,6 +38,9 @@ const CourseComponent = () => {
     const [disabledStatus, setDisabledStatus] = useState<Boolean>(true) 
     const course = useLocalStorage('CourseName');
     const sectionStatus = useLocalStorage('sectionNumber');
+    const employee = useLocalStorage('EmployeeName');
+    const courseId = useLocalStorage('courseId');
+    
      
     
     //const formRef = useRef(); 
@@ -72,19 +75,28 @@ const CourseComponent = () => {
       
         },[course]) 
 
-        const sectionSubmitHandler = (e:any) => {
+        const sectionSubmitHandler = async (e:any, section:any) => {
           e.preventDefault();
-          // setDisabledStatus(true)
-          // setQuestion1(false);
-          // setQuestion2(false);
-          // setQuestion3(false);
-          // setQuestion4(false);
+          try{
+            const docRef = doc(projectFirestore,'course-progress',courseId)
+            await setDoc(docRef, {
+              [course]: section
+            }, {merge: true})
+
+            console.log("document updated")
+        
+          
+
+          }catch(err){
+            console.log(err,"something went wrongs")
+          }
+
           
           setSelectedAnswer1(undefined)
           setSelectedAnswer2(undefined)
           setSelectedAnswer3(undefined)
           setSelectedAnswer4(undefined)
-          setSectionVisible(false)
+          //setSectionVisible(false)
           setDisabledStatus(true)
         }
 
@@ -114,7 +126,7 @@ console.log(sectionNumber)
                         style={section.orderNumber <= sectionNumber || sectionStatus == "Pass" ? {backgroundColor:"#daedf4"} : {backgroundColor:"none"}} 
                         onClick={(e)=>{setSelectedSection(section); setSectionVisible(true);}}>
                           <span>{section.id}</span><br/>
-                          <span style={{float:"right", fontSize:"15px"}}>{section.orderNumber <= sectionNumber || sectionStatus == "Pass" ? "section completed" : null}</span>
+                          <span style={{float:"right", fontSize:"15px"}}>{section.orderNumber <= sectionNumber || sectionStatus == "Pass" ? "section complete" : null}</span>
                       </li>
             })}
         <li 
@@ -123,7 +135,7 @@ console.log(sectionNumber)
             style={sectionStatus == "Pass" ? {backgroundColor:"#daedf4"} : {backgroundColor:"none"}} 
             >
           <span>Conclusion - Final Knowledge Check</span>
-          <span style={{float:"right", fontSize:"15px"}}>{sectionStatus == "Pass" ? "section completed" : null}</span>
+          <span style={{float:"right", fontSize:"15px"}}>{sectionStatus == "Pass" ? "section complete" : null}</span>
         </li>
           </ul>
 
@@ -164,7 +176,7 @@ console.log(sectionNumber)
                           if(answer !== "" && answer !== null){
                             return <div key ={answer} style={{margin:"0.4rem 0rem"}}>
                             <RadioButton 
-                                        disabled={disabledStatus}
+                                        disabled={false}
                                         className="radioBtn" 
                                         style={{margin: "0rem 0.2rem"}} 
                                         inputId={answer}
@@ -292,8 +304,8 @@ console.log(sectionNumber)
                       </>}
                     <br/>
                         <Button 
-                            onClick={sectionSubmitHandler}
-                            disabled={disabledStatus}>Submit</Button>
+                            onClick={(e)=>{sectionSubmitHandler(e,selectedSection.id)}}
+                            disabled={false}>Submit</Button>
                         </form>
 
       </>  }

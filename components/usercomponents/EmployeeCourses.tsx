@@ -37,8 +37,6 @@ const EmployeeCourses = () => {
         const q = query(collectionRef, where("Employee_Name", "==", `${employee}`))
         const querySnapshot = await getDocs(q);
 
-       //const querySnapshot = await getDocs(collection(projectFirestore, "course-progress"));
-       console.log(querySnapshot.docs) 
        querySnapshot.docs.map((doc) => {
           // doc.data() is never undefined for query doc snapshots
           return results.push({id: doc.id, ...doc.data()});
@@ -53,22 +51,7 @@ const EmployeeCourses = () => {
       
         },[employee])  
 
-    // if(courseProgress){
-    //     courseProgress.map((courses:any)=>{
-    //         if(courses.Employee_Name === selection.Name){
-    //             return console.log(courses)
-    //         }
-    //     })
-    // }
-    // if(courseProgress){
-    //     console.log(
-    //         Object.entries(courseProgress[0]).map((item:any)=>{
-    //             return item[0];
-    //         }))
-    // }
- 
-
-    //let percentage = 50;
+    
 
     const r = /\d+/;
 
@@ -79,7 +62,16 @@ const EmployeeCourses = () => {
           </Fragment>
       );
   };
-  console.log(courseProgress)
+  
+console.log(courseProgress)
+
+useEffect(()=>{
+if(courseProgress){
+    courseProgress.map((courseDoc:any)=>{
+        return localStorage.setItem('courseId', courseDoc.id)
+    })
+}
+},[courseProgress])
 
 
 
