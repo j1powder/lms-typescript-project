@@ -117,6 +117,7 @@ if(courseProgress){
                                 onClick={()=>{console.log(item[0].replace(/_/g, ' '), item[1]);
                                               localStorage.setItem('sectionNumber', item[1]); }} 
                                 >
+                                    
                                 <div style={{padding:"1rem"}}>
                                 <span 
                                 className={classes.courseTitle} 
