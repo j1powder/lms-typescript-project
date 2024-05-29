@@ -1,8 +1,9 @@
 .logo {
-     width: 20%;
+     width: 15%;
      height: auto;
      margin: 0rem 1.5rem;
      padding: none;
+    
 }
 
 .footcontainer {
@@ -14,5 +15,26 @@
 
  .menuBar {
      display: inline;
+ }
+
+ .menuList {
+    float: right;
+    margin-right: 1rem;
+    
+ }
+
+ .menuList li{
+    display: inline;
+    list-style: none;
+    margin: 0rem 1rem;
+    color: #1189dd;
+    
+ }
+ .menuList li:hover{
+cursor: pointer;
+ }
+
+ .menuList a{
+    text-decoration: none;
  }
 

@@ -9,6 +9,8 @@ import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
 import { DataContextProvider } from "@/context/DataContext";
 import { EmployeeContextProvider } from "@/context/EmployeeContext";
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes';
+
 import { Button } from 'primereact/button'
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,17 +27,18 @@ export default function RootLayout({
 }>) {
  
   return (
-    <ClerkProvider>
+    <ClerkProvider
+    appearance={{
+      baseTheme: [dark],
+      variables: { colorPrimary: '#1189dd' },
+      signIn: { 
+        baseTheme: [dark], 
+        variables: { colorPrimary: '#1189dd' }
+      }
+    }}>
     <html lang="en">
       <body className={inter.className}>
-      <SignedOut>
-          <SignInButton>
-            < Button>Sign In</Button>
-          </SignInButton>
-      </SignedOut>
-      <SignedIn>
-        <UserButton/>
-      </SignedIn>
+
         <PrimeReactProvider >
           <DataContextProvider>
             <EmployeeContextProvider>

@@ -9,8 +9,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'next/image'
 import logo from '../../public/logo.png'
+import { Button } from 'primereact/button'
 import { Menubar } from 'primereact/menubar';
 import { useRouter } from 'next/navigation'
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import {dark} from "@clerk/themes";
+
+import Link from 'next/link'
+
 
 import classes from './Header.module.css'
 
@@ -47,12 +53,28 @@ const start = <Image className={classes.logo} src={logo} alt="Construction Banne
 
 
     return <Fragment>
+        <nav>
+        <Image className={classes.logo} src={logo} alt="Construction Banner" />
         <ul className={classes.menuList}>
-        <li>Home</li>
-        <li>Course list</li>
-        <li>Course Builder</li>
-        <li>Sign In</li>
+        
+        
+
+        <SignedOut>
+        <Link href="/"><li>Home</li></Link>
+        <SignInButton > 
+            <li>Sign In</li>
+        </SignInButton>
+        </SignedOut>
+
+        <SignedIn>
+        <Link href="/dashboard"><li>Dashboard</li></Link>
+        <Link href="/courseslist"><li>Course list</li></Link>
+        <Link href="coursebuilder"><li>Course Builder</li></Link>
+        <UserButton/>
+      </SignedIn>
+
         </ul>
+        </nav>
     </Fragment>
 }
 
