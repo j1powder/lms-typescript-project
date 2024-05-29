@@ -8,6 +8,8 @@ import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
 import { DataContextProvider } from "@/context/DataContext";
 import { EmployeeContextProvider } from "@/context/EmployeeContext";
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { Button } from 'primereact/button'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +25,17 @@ export default function RootLayout({
 }>) {
  
   return (
+    <ClerkProvider>
     <html lang="en">
       <body className={inter.className}>
+      <SignedOut>
+          <SignInButton>
+            < Button>Sign In</Button>
+          </SignInButton>
+      </SignedOut>
+      <SignedIn>
+        <UserButton/>
+      </SignedIn>
         <PrimeReactProvider >
           <DataContextProvider>
             <EmployeeContextProvider>
@@ -34,5 +45,6 @@ export default function RootLayout({
         </PrimeReactProvider>
         </body>
     </html>
+    </ClerkProvider>
   );
 }

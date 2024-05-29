@@ -6,11 +6,15 @@ import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer'
 import cover from '../public/frontCover.jpeg'
 import Image from 'next/image'
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+
+
 
 
 export default function Home() {
   return (
     <Fragment>
+
       <Header />
     <div className={styles.page}>
       

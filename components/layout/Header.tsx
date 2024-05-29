@@ -47,7 +47,12 @@ const start = <Image className={classes.logo} src={logo} alt="Construction Banne
 
 
     return <Fragment>
-      <Menubar model={items} start={start}/>
+        <ul className={classes.menuList}>
+        <li>Home</li>
+        <li>Course list</li>
+        <li>Course Builder</li>
+        <li>Sign In</li>
+        </ul>
     </Fragment>
 }
 
