@@ -2,11 +2,7 @@
 
 
 import { Fragment } from 'react'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+
 import Image from 'next/image'
 import logo from '../../public/logo.png'
 import { Button } from 'primereact/button'
@@ -53,7 +49,7 @@ const start = <Image className={classes.logo} src={logo} alt="Construction Banne
 
 
     return <Fragment>
-        <nav>
+        <nav className={classes.navBar}>
         <Image className={classes.logo} src={logo} alt="Construction Banner" />
         <ul className={classes.menuList}>
         
@@ -70,7 +66,7 @@ const start = <Image className={classes.logo} src={logo} alt="Construction Banne
         <Link href="/dashboard"><li>Dashboard</li></Link>
         <Link href="/courseslist"><li>Course list</li></Link>
         <Link href="coursebuilder"><li>Course Builder</li></Link>
-        <UserButton/>
+        <UserButton afterSignOutUrl='/'/>
       </SignedIn>
 
         </ul>
