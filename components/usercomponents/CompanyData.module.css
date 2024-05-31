@@ -52,3 +52,16 @@
     margin-bottom: 1rem;
 }
 
+.gridItems {
+    
+    padding: .5rem 0.5rem;
+    border-radius: 5px;
+    
+}
+
+.rowMargin {
+    margin: 0.5rem 0rem;
+    
+    border-radius: 5px;
+}
+

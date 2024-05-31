@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 //import 'bootstrap/dist/css/bootstrap.min.css';
-import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
-import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
+//import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+//import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
 import { DataContextProvider } from "@/context/DataContext";
 import { EmployeeContextProvider } from "@/context/EmployeeContext";
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
@@ -39,13 +39,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
 
-        <PrimeReactProvider >
+        
           <DataContextProvider>
             <EmployeeContextProvider>
         {children}
         </EmployeeContextProvider>
         </DataContextProvider>
-        </PrimeReactProvider>
+        
         </body>
     </html>
     </ClerkProvider>

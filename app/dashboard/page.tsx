@@ -6,6 +6,9 @@ import Footer from '@/components/layout/Footer'
 import { Fragment } from 'react'
 import { DataContextProvider } from '@/context/DataContext'
 import { useUser, RedirectToSignIn   } from '@clerk/nextjs'
+import  Container  from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 
 import classes from './Dashboard.module.css'
@@ -18,6 +21,7 @@ if(!user){
     return <RedirectToSignIn />
 } else {
     return <Fragment>
+
         <Header />
         <br/>
         <div style={{minHeight:"600px"}} className={classes.gridContainer}>
@@ -29,6 +33,7 @@ if(!user){
               
         </div>
         <Footer/>
+
     </Fragment>
 }
 
