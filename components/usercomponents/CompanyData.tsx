@@ -120,7 +120,7 @@ const CompanyData = (props:any) => {
     }    else {
         return <Fragment>
           <Card style={{padding:'1rem'}}>
-          <Container>
+{/*           <Container>
             <Row className={classes.rowMargin}>
               <Col className={classes.gridItems} md={4}><b>Company</b></Col>
               <Col className={classes.gridItems} md={2}><b>Status</b></Col>
@@ -152,15 +152,15 @@ const CompanyData = (props:any) => {
                   <Pagination.Item>{4}</Pagination.Item>
                   <Pagination.Item>{5}</Pagination.Item>
                   <Pagination.Ellipsis />
-                </Pagination> */}
+                </Pagination>
                 
               
             
-          </Container>
+          </Container> */}
 
 
           <h5>Company Data Component</h5>
-{/*       <PrimeReactProvider value={{unstyled:true}}>   
+      <PrimeReactProvider >   
       <DataTable value={myData} 
                  showGridlines
                  paginator 
@@ -175,7 +175,7 @@ const CompanyData = (props:any) => {
         <Column field="Expires_On" header="Expiration"></Column>
         <Column field="Completed_Courses" header="Percent Complete"></Column>
       </DataTable>
-      </PrimeReactProvider>  */}
+      </PrimeReactProvider>  
       </Card>
     </Fragment>
     

@@ -29,7 +29,7 @@ const EmployeeData = () => {
     useEffect(()=>{
         let results:object[]=[];
         const fetchData = async () => {
-        const collectionRef = collection(projectFirestore, "users")
+        const collectionRef = collection(projectFirestore, "updated_users")
         
         const q = query(collectionRef, where("Company_Name", "==", `${company}`));
         // if(selection !== undefined && selection.Name){
